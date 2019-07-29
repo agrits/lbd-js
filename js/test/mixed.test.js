@@ -144,8 +144,33 @@ function sign(number){
 function rot(char, factor){
   alphabetLength = 26
   code = char.charCodeAt(0)
-  if((code >= "A".charCodeAt(0) && code <= "Z".charCodeAt(0)) || (code >= "a".charCodeAt(0) && code <= "z".charCodeAt(0))){
-    newCode = code + (alphabetLength - sign(factor)*(factor%alphabetLength))
+  isUpperCase = (code >= "A".charCodeAt(0) && code <= "Z".charCodeAt(0))
+  isLowerCase = (code >= "a".charCodeAt(0) && code <= "z".charCodeAt(0))
+  ACode = "A".charCodeAt(0)
+  ZCode = "Z".charCodeAt(0)
+  zCode = "z".charCodeAt(0)
+  aCode = "a".charCodeAt(0)
+  newCode = null
+  if(isUpperCase){
+    diff = factor > 0 ? factor%alphabetLength : alphabetLength + factor%alphabetLength
+    newCode = code + diff
+    if(newCode > ZCode){
+      newCode = ACode + newCode-ZCode - 1
+    }
+    if(newCode < ACode){
+      newCode = ZCode - ACode-newCode + 1
+    }
+    return String.fromCharCode(newCode)
+  }
+  if(isLowerCase){
+    diff = factor > 0 ? factor%alphabetLength : alphabetLength + factor%alphabetLength
+    newCode = code + diff
+    if(newCode > zCode){
+      newCode = aCode + newCode-zCode -1
+    }
+    if(newCode < aCode){
+      newCode = zCode - aCode-newCode +1
+    }
     return String.fromCharCode(newCode)
   }
   return char
@@ -461,7 +486,7 @@ describe('9. getCaesarCode', ()=> {
     assert(test === expected);
   });
   it('getCaesarCode should work with words', () => {
-    var test = getCaesarCode('A', 1);
+    var test = getCaesarCode('Aaa', 1);
     var expected = 'Bbb';
     assert(test === expected);
   });
