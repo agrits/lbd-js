@@ -44,3 +44,10 @@
 .event.job {
     background-color: #E8E193;
 }
+
+ul{
+  font-size:75%;
+  list-style:none;
+  padding-left:20px;
+  padding-right:5px;
+}
