@@ -1,0 +1,25 @@
+.img01{
+  width: 40%;
+}
+h3{
+  color: violet;
+  text-decoration: underline;
+  font-family: fantasy;
+  letter-spacing: 10px;
+}
+.foo{
+  font-size: small;
+  color: red;
+}
+.biz{
+  font-family: "Comic Sans MS";
+  color: pink;
+  background-color: black;
+}
+.bar{
+  font-size: smaller;
+  color: aqua;
+}
+.fifth{
+  background-color: GreenYellow;
+}
