@@ -31,17 +31,22 @@ function operationClicked(op){
   ans = current
 }
 function equalsClicked(){
-  current = ""+eval(ans+operation+current)
-  ans = ""
-  mode = "equals"
-  updateDisplay(current)
+  if(mode === "equals"){
+    current = ""+eval(ans+operation+current)
+    updateDisplay(current)
+  }
+  else{
+    current = ""+eval(ans+operation+current)
+    mode = "equals"
+    updateDisplay(current)
+  }
 }
 function updateDisplay(string){
   $("#display").val(string)
 }
 function clearClicked(){
-  updateDisplay("")
-  current = ""
+  updateDisplay("0")
+  current = "0"
   ans = ""
   operation = "+"
   mode = "number"
@@ -63,7 +68,7 @@ $(document).ready(function(){
   mode = "equals"
   ans = ""
   operation = "+"
-  current = ""
+  current = "0"
   initHandlers()
-  updateDisplay("")
+  updateDisplay("0")
 })
