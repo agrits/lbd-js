@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "mocha": "^5.2.0",
+    "node-horseman": "^3.3.0",
+    "phantomjs": "^2.1.7"
+  }
+}
