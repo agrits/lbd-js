@@ -1,15 +1,21 @@
 
 function numberClicked(number){
-  if(mode === "equals"){
+  if((mode==="equals" || mode==="number") && current == 0 && current !==""){
+    current = ""
+    numberClicked(number)
+  }
+  else if(mode === "equals"){
     current = ""
     mode = "number"
     numberClicked(number)
   }
+
   else{
     if(mode === "operation"){
       ans = current
       current = ""
     }
+
     mode = "number"
     current = parseFloat(current + "" + number)
     updateDisplay(current)
