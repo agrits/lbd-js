@@ -32,10 +32,11 @@ function operationClicked(op){
 }
 function equalsClicked(){
   if(mode === "equals"){
-    current = ""+eval(ans+operation+current)
+    current = ""+eval(last+operation+current)
     updateDisplay(current)
   }
   else{
+    last = current
     current = ""+eval(ans+operation+current)
     mode = "equals"
     updateDisplay(current)
