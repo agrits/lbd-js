@@ -1,4 +1,10 @@
 
+
+function numberClickedBinder(number){
+  return $("#button"+number).click(function(){numberClicked(number); console.log(number)})
+}
+
+
 function numberClicked(number){
   if((mode==="equals" || mode==="number") && current == 0 && current !==""){
     current = ""
@@ -42,34 +48,37 @@ function equalsClicked(){
     updateDisplay(current)
   }
 }
+
 function updateDisplay(string){
   $("#display").val(string)
 }
+
 function clearClicked(){
-  updateDisplay("0")
-  current = "0"
+  updateDisplay("")
+  current = ""
   ans = ""
   operation = "+"
   mode = "number"
 }
+
 function initHandlers(){
-  for(let i = 0; i<=9; i++){
-    $("#button"+i).on('click', function(){numberClicked(i)})
+
+  $("#equalsButton").click(equalsClicked)
+  $("#multiplyButton").click(function(){operationClicked("*")})
+  $("#addButton").click(function(){operationClicked("+")})
+  $("#subtractButton").click(function(){operationClicked("-")})
+  $("#divideButton").click(function(){operationClicked("/")})
+  $("#clearButton").click(clearClicked)
+
+  for(i = 0; i<=9; i++){
+    numberClickedBinder(i)
   }
-
-  $("#equalsButton").on('click', equalsClicked)
-  $("#multiplyButton").on('click', function(){operationClicked("*")})
-  $("#addButton").on('click', function(){operationClicked("+")})
-  $("#subtractButton").on('click', function(){operationClicked("-")})
-  $("#divideButton").on('click', function(){operationClicked("/")})
-  $("#clearButton").on('click', clearClicked)
 }
-
 $(document).ready(function(){
   mode = "equals"
   ans = ""
   operation = "+"
-  current = "0"
+  current = ""
   initHandlers()
-  updateDisplay("0")
+  updateDisplay("")
 })
