@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+
+    <div class="clock">
+      <div class="clock-face">
+        <div data-color='blue' class="hand hour-hand"></div>
+        <div  data-color='blue' class="hand min-hand"></div>
+        <div  data-color='blue' class="hand second-hand"></div>
+      </div>
+    </div>
+
+
+  <style>
+    html {
+      background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=5);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .hand {
+      width: 50%;
+      height: 6px;
+      background: black;
+      position: absolute;
+      top: 50%;
+      transform-origin: 100%;
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+    }
+
+  </style>
+  <script
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			  crossorigin="anonymous"></script>
+  <script>
+    //Create constants for each hand using it's class in querySelector
+    const hourHand = $(".hour-hand")[0]
+    const minuteHand = $(".minute-hand")[0]
+    const secondHand = $(".second-hand")[0]
+    //Create function that takes current time and transforms(rotates) each hand accordingly
+    // check date function, get seconds, minutes, hours from it
+    // change transform style => check rotate css property
+    const angleOffset = 90 //offset needed to place hands pointing up at 00:00:00
+    function getSecondsAngle(seconds){
+      return (seconds/60)*360+angleOffset
+    }
+    function getMinutesAngle(minutes){
+      return (minutes/60)*360+angleOffset
+    }
+    function getHoursAngle(hours){
+      return (hours/12)*360+angleOffset
+    }
+
+    function setHands(){
+      time = (new Date)
+      var seconds = time.getSeconds()
+      var minutes = time.getMinutes()
+      var hours = time.getHours()
+      rotateSecondHand(getSecondsAngle(seconds))
+      rotateMinuteHand(getMinutesAngle(minutes))
+      rotateHourHand(getHoursAngle(hours))
+    }
+
+    function rotateHand(hand, angle){
+      $(hand).css("transform", "rotate("+angle+"deg)")
+    }
+
+    function rotateSecondHand(angle){
+      rotateHand(secondHand, angle)
+    }
+    function rotateMinuteHand(angle){
+      rotateHand(minuteHand, angle)
+    }
+    function rotateHourHand(angle){
+      rotateHand(hourHand, angle)
+    }
+    //call JS inbuilt function setInterval every second, which will call written previously function
+    window.setInterval(setHands, 1000)
+
+    //check if time clock is set correctly
+
+  </script>
+</body>
+</html>
