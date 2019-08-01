@@ -57,13 +57,21 @@
 
     .hand {
       width: 50%;
-      height: 6px;
       background: black;
       position: absolute;
       top: 50%;
       transform-origin: 100%;
       transition: all 0.05s;
       transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+    }
+    .hour-hand{
+      height:6px;
+    }
+    .min-hand{
+      height:4px;
+    }
+    .second-hand{
+      height:2px;
     }
 
   </style>
@@ -74,7 +82,7 @@
   <script>
     //Create constants for each hand using it's class in querySelector
     const hourHand = $(".hour-hand")[0]
-    const minuteHand = $(".minute-hand")[0]
+    const minuteHand = $(".min-hand")[0]
     const secondHand = $(".second-hand")[0]
     //Create function that takes current time and transforms(rotates) each hand accordingly
     // check date function, get seconds, minutes, hours from it
@@ -83,11 +91,11 @@
     function getSecondsAngle(seconds){
       return (seconds/60)*360+angleOffset
     }
-    function getMinutesAngle(minutes){
-      return (minutes/60)*360+angleOffset
+    function getMinutesAngle(minutes, seconds){
+      return ((minutes*60+seconds)/(60*60))*360+angleOffset
     }
-    function getHoursAngle(hours){
-      return (hours/12)*360+angleOffset
+    function getHoursAngle(hours, minutes, seconds){
+      return ((hours*3600+minutes*60+seconds)/(12*3600))*360+angleOffset
     }
 
     function setHands(){
@@ -96,8 +104,8 @@
       var minutes = time.getMinutes()
       var hours = time.getHours()
       rotateSecondHand(getSecondsAngle(seconds))
-      rotateMinuteHand(getMinutesAngle(minutes))
-      rotateHourHand(getHoursAngle(hours))
+      rotateMinuteHand(getMinutesAngle(minutes, seconds))
+      rotateHourHand(getHoursAngle(hours, minutes, seconds))
     }
 
     function rotateHand(hand, angle){
