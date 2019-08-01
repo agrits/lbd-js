@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+
+//https://kursjs.pl/kurs/canvas/canvas-paint.php
+//CREATE paint like canvas
+
+//add reference to canvas
+const canvas = document.getElementById("draw")
+const ctx = canvas.getContext('2d');
+
+//set canvas width and height to window height and width
+ctx.canvas.width = window.innerWidth
+ctx.canvas.height = window.innerHeight
+//set stroke style
+//set line properties
+
+//create variables for
+//isDrawing - boolean
+//lastX = 0
+//lastY = 0
+//direction - boolean
+var isDrawing = false
+var lastX = 0
+var lastY = 0
+var direction = false
+var drawable = false
+var hue = 0
+var counter = 0
+//create function draw with single argument - e
+//{
+//return from function if drawing state is false
+function draw(e){
+//set stroke color
+  if(!isDrawing || !drawable){
+    return null
+  }
+  ctx.strokeStyle = "hsl("+hue+",100%,50%)"
+  ctx.beginPath();
+  if(direction){
+    ctx.moveTo(lastX,lastY)
+  }
+  else {
+    ctx.moveTo(e.clientX, e.clentY)
+    direction = true
+  }
+  ctx.lineTo(e.clientX,e.clientY)
+  ctx.stroke();
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+
+  if(lastX == e.clientX && lastY == e.clientY){
+    ctx.fillRect(lastX, lastY, 1, 1)
+  }
+  //increment hue
+  //if hue crosses 360 threshold, reset it to 0
+  hue = hue%359+1
+  ctx.lineWidth = 10*Math.abs(Math.sin(counter/100))+1
+  counter++
+  //add params to make draw stroke increase in size in oscilating way
+
+
+}
+
+//add mousedown event listener on canvas, function has argument event - e (hint check offsets properties)
+canvas.addEventListener('mousedown', function(e){console.log("mouseDown");isDrawing = true}, false)
+ //set also [lastX, lastY] = [e.offsetX, e.offsetY];
+
+//add mousemove event listener that will call draw function
+canvas.addEventListener('mousemove', draw, false)
+//add mouseup listener - stop draw state
+canvas.addEventListener('mouseup', function(e){console.log("mouseUp");isDrawing = false; direction=false}, false)
+//add mouseout listener - start draw state
+canvas.addEventListener('mouseout', function(e){drawable = false;direction=false}, false)
+canvas.addEventListener('mouseenter', function(e){drawable = true}, false)
+
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+</style>
+
+</body>
+</html>
